@@ -1,7 +1,7 @@
 const Stock = require("../models/stockModel");
 
 exports.stockIn = (req, res) => {
-    const { product_id, store_id, quantity } = req.body;  // Now includes store_id
+    const { product_id, store_id, quantity } = req.body; 
     if (!product_id || !store_id || !quantity) {  // Check for store_id as well
         return res.status(400).json({ error: "Product ID, Store ID, and quantity are required" });
     }
@@ -18,8 +18,7 @@ exports.sale = (req, res) => {
         return res.status(400).json({ error: "Product ID, Store ID, and quantity are required" });
     }
 
-    // Ensure movement_type matches DB constraint
-    const movementType = "sale"; // Ensure correct lowercase format
+    const movementType = "sale"; 
 
     Stock.addStockMovement(product_id, store_id, quantity, movementType, (err, movement) => {
         if (err) return res.status(500).json({ error: err.message });

@@ -1,6 +1,6 @@
 const db = require("../config/db");
 
-// Function to add stock movement, including store_id
+
 const addStockMovement = (product_id, store_id, quantity, movement_type, callback) => {
     const query = 'INSERT INTO stock_movements (product_id, store_id, quantity, movement_type) VALUES ($1, $2, $3, $4) RETURNING *';
     db.query(query, [product_id, store_id, quantity, movement_type], (err, result) => {
@@ -8,7 +8,7 @@ const addStockMovement = (product_id, store_id, quantity, movement_type, callbac
     });
 };
 
-// Function to get inventory including store_id and stock calculations
+
 const getInventory = (callback) => {
     const query = `
         SELECT p.product_id, p.name, p.category, p.price, s.store_id,
