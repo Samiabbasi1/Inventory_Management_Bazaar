@@ -1,41 +1,16 @@
 const db = require("../config/db");
 
-function addProduct(name, category, price, callback) {
-    const query = 'INSERT INTO products(name, category, price) VALUES (?, ?, ?)';
-    db.run(query, [name, category, price], function (err) {
-        callback(err, { id: this.lastID, name, category, price });
+const addProduct = (name, category, price, callback) => {
+    const query = 'INSERT INTO products (name, category, price) VALUES ($1, $2, $3) RETURNING *';
+    db.query(query, [name, category, price], (err, result) => {
+        callback(err, result ? result.rows[0] : null);
     });
-}
-
-function getAllProducts(callback) {
-    db.all('SELECT * FROM products', (err, rows) => callback(err, rows));
-}
-
-// ✅ Correct module.exports
-module.exports = {
-    addProduct,
-    getAllProducts
 };
 
+const getAllProducts = (callback) => {
+    db.query('SELECT * FROM products', (err, result) => {
+        callback(err, result ? result.rows : null);
+    });
+};
 
-
-
-
-// const db = require("../config/db");
-
-// exports.addProduct = (name,category,price,callback) => {
-//     const query = 'INSERT INTO products(name,category,price) values(?,?,?)';
-//     db.run(query,[name,category,price], function(err) {
-//         callback(err, {id:this.lastID,name,category,price})
-//     });
-// };
-
-// exports.getAllProducts = (callback) =>{
-//     db.all('SELECT * FROM products',(err,rows)=>callback(err,rows))
-// };
-
-
-// module.exports = {
-//     addProduct,
-//     getAllProducts
-// }
+module.exports = { addProduct, getAllProducts };

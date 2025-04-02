@@ -9,7 +9,7 @@ router.post("/stock-in", stockController.stockIn);
 router.post("/sale", stockController.sale);
 
 // Remove stock manually
-router.post("/remove", stockController.removeStock);
+// router.post("/remove", stockController.removeStock);
 
 // View current inventory
 router.get("/", stockController.getInventory);
